@@ -1,0 +1,18 @@
+{
+  "name": "pet-adoption-website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Essa Jamal",
+  "license": "ISC",
+  "description": "This is our Team Project Webiste for Pet Adoption by Innovation Initiative",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "sqlite3": "^5.1.7"
+  }
+}

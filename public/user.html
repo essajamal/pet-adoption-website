@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Listings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1> 🐾 PawQuest</h1>
+        </div>
+        <nav>
+            <ul>
+                <li>Welcome Essa 🐾</li> 
+                <li><a href="index.html">Logout</a></li> 
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filter-container">
+            <div class="filter">
+                <label>Species</label>
+                <select id="species-filter">
+                    <option value="">All Species</option>
+                    <option value="Dog">Dogs</option>
+                    <option value="Cat">Cats</option>
+                    <option value="Bird">Birds</option>
+                    <option value="Fowl">Fowls</option>
+                    <option value="Guinea Pig">Guinea Pigs</option>
+                    <option value="Rabbit">Rabbits</option>
+                    <option value="Turtle">Turtles</option>
+                    <option value="Horse">Horses</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Breed</label>
+                <select id="breed-filter">
+                    <option value="">All Breeds</option>
+                    <option value="Labrador Retriever">Labrador Retriever</option>
+                    <option value="Persian">Persian</option>
+                    <option value="Border Terrier">Border Terrier</option>
+                    <option value="Aegean">Aegean</option>
+                    <option value="Parrot">Parrot</option>
+                    <option value="Brakel">Brakel</option>
+                    <option value="Netherland Dwarf">Netherland Dwarf</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Color</label>
+                <select id="color-filter">
+                    <option value="">All Colors</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Green">Brown</option>
+                    <option value="Grey">Brown</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Age</label>
+                <select id="age-filter">
+                    <option value="">All Ages</option>
+                    <option value="1-6">1-6 Months</option>
+                    <option value="6-12">6-12 Months</option>
+                    <option value="12-18">12-18 Months</option>
+                    <option value="18-24">18-24 Months</option>
+                    <option value="24+">24+ Months</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Location</label>
+                <select id="location-filter">
+                    <option value="">All Locations</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="Huddersfield">Huddersfield</option>
+                    <option value="Wakefield">Wakefield</option>
+                    <option value="Liverpool">Liverpool</option>
+                    <option value="London">London</option>
+                    <option value="Leeds">Leeds</option>
+                </select>
+            </div>
+            <button class="search-btn" onclick="applyFilters()">Search</button>
+        </div>
+
+        <div class="pet-list" id="pet-list">
+            <!-- Pet cards will be dynamically displayed here -->
+        </div>
+    </main>
+
+    <footer>
+      <p id="footer">Innovation Initiative</p>
+    </footer>
+
+    <script>
+      // Array of pets with properties (including images)
+      const pets = [
+        {name: 'Josh', species: 'Dog', breed: 'Labrador Retriever', color: 'Brown', age: 10, location: 'Huddersfield', image: 'images/dog1.jpg'},
+        {name: 'Luci', species: 'Cat', breed: 'Persian', color: 'Black', age: 4, location: 'Manchester', image: 'images/cat1.jpg'},
+        {name: 'Foxy', species: 'Cat', breed: 'Aegean', color: 'Brown', age: 7, location: 'Wakefield', image: 'images/cat2.jpg'},
+        {name: 'Bella', species: 'Dog', breed: 'Border Terrier', color: 'Grey', age: 2, location: 'London', image: 'images/dog2.jpg'},
+        {name: 'Charlie', species: 'Bird', breed: 'Parrot', color: 'Green', age: 1, location: 'Manchester', image: 'images/bird1.jpg'},
+        {name: 'Cluckster', species: 'Foul', breed: 'Brakel', color: 'Brown', age: 8, location: 'Leeds', image: 'images/foul1.jpg'},
+        {name: 'Bunny', species: 'Rabbit', breed: 'Netherland Dwarf', color: 'Grey', age: 3, location: 'Leeds', image: 'images/rabbit1.jpg'}
+        ];
+
+
+      // Function to display pet data as cards
+      function displayPets(filteredPets) {
+        const petList = document.getElementById('pet-list');
+        petList.innerHTML = ''; // Clear existing pets
+
+        filteredPets.forEach(pet => {
+          const petCard = document.createElement('div');
+          petCard.classList.add('pet-card');
+          petCard.innerHTML = `
+            <img src="${pet.image}" alt="${pet.species}">
+            <h3>${pet.name}</h3>
+            <p>${pet.age} months old</p>
+            <p>📍 ${pet.location}</p>
+            <p>Breed: ${pet.breed}</p>
+            <p>Color: ${pet.color}</p>
+          `;
+          petList.appendChild(petCard);
+        });
+      }
+
+      // Function to apply filters and show the filtered pets
+      function applyFilters() {
+        const species = document.getElementById('species-filter').value;
+        const breed = document.getElementById('breed-filter').value;
+        const color = document.getElementById('color-filter').value;
+        const age = document.getElementById('age-filter').value;
+        const location = document.getElementById('location-filter').value;
+
+        // Filter pets based on selected filters
+        const filteredPets = pets.filter(pet => {
+          const ageInMonths = pet.age; // Age as a number (in months)
+          let isAgeValid = true;
+
+          if (age) {
+            switch (age) {
+              case '1-6':
+                isAgeValid = ageInMonths >= 1 && ageInMonths <= 6;
+                break;
+              case '6-12':
+                isAgeValid = ageInMonths >= 6 && ageInMonths <= 12;
+                break;
+              case '12-18':
+                isAgeValid = ageInMonths >= 12 && ageInMonths <= 18;
+                break;
+              case '18-24':
+                isAgeValid = ageInMonths >= 18 && ageInMonths <= 24;
+                break;
+              case '24+':
+                isAgeValid = ageInMonths >= 24;
+                break;
+            }
+          }
+
+          return (species === '' || pet.species === species) &&
+                 (breed === '' || pet.breed === breed) &&
+                 (color === '' || pet.color === color) &&
+                 isAgeValid &&
+                 (location === '' || pet.location === location);
+        });
+
+        // Display the filtered pets
+        displayPets(filteredPets);
+      }
+
+      // Display all pets initially
+      displayPets(pets);
+    </script>
+</body>
+</html>
